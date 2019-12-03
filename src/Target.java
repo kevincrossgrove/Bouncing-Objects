@@ -31,6 +31,8 @@ public class Target extends JPanel
 		return y;
 	}
 	
+	
+	
 	public void paintTarget(Graphics g)
 	{
 		g.setColor(Color.darkGray);

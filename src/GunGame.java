@@ -33,7 +33,6 @@ final public class GunGame {
 	boolean mutex_acquired = false;
 
 	ArrayList<Bullet> bulletArray = new ArrayList<Bullet>();
-	Set<Bullet> bulletSet = new HashSet<Bullet>();
 	Target theTarget = new Target();
 
 	private JButton fire;
@@ -101,6 +100,7 @@ final public class GunGame {
 				g.drawString("X v: " + bulletArray.get(bulletCount).getXChanger(), 10, 80);
 				g.drawString("Y v: " + bulletArray.get(bulletCount).getYChanger(), 10, 95);
 			}
+			
 			releaseMutex();
 
 			g.setColor(Color.yellow);
@@ -238,6 +238,7 @@ final public class GunGame {
 				mutex();
 
 				for (Bullet everyBullet : bulletArray) {
+					everyBullet.setRandom();
 					if (bulletArray.get(bulletCount).getCount() == 0) {
 						bulletArray.get(bulletCount).startY();
 					}
@@ -288,9 +289,11 @@ final public class GunGame {
 						if (thisBullet.getXValue() < 130) {
 							thisBullet.changeXDirection();
 						}
+						
 					}
 				}
 			}
+		
 
 			//Iterator used for deleting items out of the list
 			Iterator<Bullet> iter = bulletArray.iterator();
@@ -323,5 +326,17 @@ final public class GunGame {
 	public void mutex()
 	{
 		while (!acquireMutex()) { }
+	}
+	
+	public void checkCollision()
+	{
+		for (Bullet everyBullet : bulletArray) {
+			if((everyBullet.getXValue() > theTarget.getTargetX() && everyBullet.getXValue() < theTarget.getTargetX() + 100)
+					|| everyBullet.getYValue() > theTarget.getTargetY() && everyBullet.getXValue() < theTarget.getTargetY() + 100 )
+			{
+				everyBullet.changeXDirection();
+				everyBullet.changeYDirection();
+			}
+		}
 	}
 }
