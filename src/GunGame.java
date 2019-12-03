@@ -292,6 +292,7 @@ final public class GunGame {
 				}
 			}
 
+			//Iterator used for deleting items out of the list
 			Iterator<Bullet> iter = bulletArray.iterator();
 			while (iter.hasNext() && clearScreen) {
 				Bullet thisBullet = (Bullet) iter.next();
@@ -311,7 +312,7 @@ final public class GunGame {
 			releaseMutex();
 
 			try {
-				Thread.sleep(1);
+				Thread.sleep(2);
 			} catch (Exception e) {
 			}
 			frame.repaint();
@@ -321,7 +322,6 @@ final public class GunGame {
 	//Mutual exclusion function - runs while mutex has not been acquired
 	public void mutex()
 	{
-		while (!acquireMutex()) {
-		}
+		while (!acquireMutex()) { }
 	}
 }
