@@ -93,8 +93,8 @@ final public class GunGame {
 			g.drawString("Clicks: " + clickCount, 10, 20);
 			g.drawString("Bullets: " + totalBullets, 10, 35);
 
-			while (!acquireMutex()) {
-			}
+			mutex();
+			
 			if (!bulletArray.isEmpty()) {
 				g.drawString("X: " + bulletArray.get(bulletCount).getXValue(), 10, 50);
 				g.drawString("Y: " + bulletArray.get(bulletCount).getYValue(), 10, 65);
@@ -128,9 +128,8 @@ final public class GunGame {
 			else
 				changePicture.setVisible(true);
 
-			while (!acquireMutex()) {
-			}
-			;
+			mutex();
+			
 			if (!bulletArray.isEmpty()) {
 				for (Bullet newBullet : bulletArray) {
 					newBullet.paint(g);
@@ -179,11 +178,8 @@ final public class GunGame {
 				clickCount++;
 				totalBullets++;
 
-				while (true) {
-					if (acquireMutex()) {
-						break;
-					}
-				}
+				mutex();
+				
 				// If else statement for adding bullets. Doesn't run until mutex is completed.
 				if (bulletArray.isEmpty()) {
 					bulletArray.add(new Bullet());
@@ -201,9 +197,8 @@ final public class GunGame {
 			else if (ae.getSource() == changePicture) {
 				clickCount++;
 
-				while (!acquireMutex()) {
-				}
-				;
+				mutex();
+				
 				bulletArray.get(bulletCount).setRandom();
 				if (bulletArray.get(bulletCount).getCount() == 0) {
 					bulletArray.get(bulletCount).startY();
@@ -221,7 +216,7 @@ final public class GunGame {
 			else if (ae.getSource() == scramble) {
 				clickCount++;
 
-				while (!acquireMutex()) {}
+				mutex();
 				
 				for (Bullet everyBullet : bulletArray) {
 					everyBullet.setRandom();
@@ -240,7 +235,7 @@ final public class GunGame {
 			} else if (ae.getSource() == randomize) {
 				clickCount++;
 
-				while (!acquireMutex()) {}
+				mutex();
 
 				for (Bullet everyBullet : bulletArray) {
 					if (bulletArray.get(bulletCount).getCount() == 0) {
@@ -270,8 +265,8 @@ final public class GunGame {
 				theTarget.changeDirection();
 			}
 
-			while (!acquireMutex()) {
-			}
+			mutex();
+			
 			for (Bullet thisBullet : bulletArray) {
 				thisBullet.moveX();
 				thisBullet.moveY();
@@ -323,7 +318,7 @@ final public class GunGame {
 		}
 	}
 	
-	//Mutual exclusion function - runs while mutex 
+	//Mutual exclusion function - runs while mutex has not been acquired
 	public void mutex()
 	{
 		while (!acquireMutex()) {
