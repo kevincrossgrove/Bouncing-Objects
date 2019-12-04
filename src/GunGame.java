@@ -161,8 +161,7 @@ final public class GunGame {
 			randomize.addActionListener(this);
 			clear.addActionListener(this);
 			
-			KeyListener keyListener = null;
-			addKeyListener(keyListener);
+			addKeyListener(this);
 			setFocusable(true);
 			setFocusTraversalKeysEnabled(false);
 
@@ -177,6 +176,12 @@ final public class GunGame {
 			scramble.setForeground(Color.white);
 			randomize.setForeground(Color.white);
 			clear.setForeground(Color.white);
+			
+			fire.setFocusable(false);
+			changePicture.setFocusable(false);
+			scramble.setFocusable(false);
+			randomize.setFocusable(false);
+			clear.setFocusable(false);
 
 			add(fire);
 			add(changePicture);

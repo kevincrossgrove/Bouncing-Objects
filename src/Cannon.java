@@ -17,7 +17,7 @@ public class Cannon extends JPanel {
 		y = 400;
 		height = 25;
 		width = 100;
-		velocity = 1;
+		velocity = 4;
 	}
 
 
@@ -32,12 +32,11 @@ public class Cannon extends JPanel {
 
 
 	public void up() {
-		y+= velocity;;
+		y-= velocity;;
 	}
 	
 	public void down() {
-		y-= velocity;
-		System.out.println("In down cannon function");
+		y+= velocity;
 	}
 	
 	public int getHeight() {
