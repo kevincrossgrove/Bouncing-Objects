@@ -4,10 +4,10 @@ import java.awt.Graphics;
 import java.awt.Polygon;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Set;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -76,7 +76,7 @@ final public class GunGame {
 
 //We now create a class that is the panel and has the buttons...for our
 
-	class DrawPanel extends JPanel implements ActionListener {
+	class DrawPanel extends JPanel implements ActionListener, KeyListener {
 
 		private static final long serialVersionUID = 1L;
 
@@ -256,6 +256,24 @@ final public class GunGame {
 			}
 			repaint();
 		}
+
+		@Override
+		public void keyTyped(KeyEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void keyPressed(KeyEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void keyReleased(KeyEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
 	}
 
 //end of class DrawPanel
@@ -327,7 +345,7 @@ final public class GunGame {
 
 			try {
 				//Changes the speed of moving objects
-				Thread.sleep(2);
+				Thread.sleep(1);
 			} catch (Exception e) {
 			}
 			frame.repaint();
@@ -350,5 +368,20 @@ final public class GunGame {
 				thisBullet.changeYDirection();
 			}
 		}
+	}
+
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }
