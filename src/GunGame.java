@@ -8,6 +8,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Random;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -297,6 +298,7 @@ final public class GunGame {
 				{
 					System.out.println("In collision loop");
 					score++;
+					thisBullet.setCollided();
 					thisBullet.changeXDirection();
 					thisBullet.changeYDirection();
 				}
@@ -358,16 +360,13 @@ final public class GunGame {
 		while (!acquireMutex()) { }
 	}
 	
-	public void checkCollision()
+	public void changeColor()
 	{
-		for (Bullet thisBullet : bulletArray) {
-			if((thisBullet.getXValue() > theTarget.getTargetX() && thisBullet.getXValue() < theTarget.getTargetX() + 100)
-					&& (thisBullet.getYValue() > theTarget.getTargetY() && thisBullet.getXValue() < theTarget.getTargetY() + 100) )
-			{
-				thisBullet.changeXDirection();
-				thisBullet.changeYDirection();
-			}
-		}
+		Random rand = new Random();
+	    float r = rand.nextFloat();
+	    float g = rand.nextFloat();
+	    float b = rand.nextFloat();
+	    Color randomColor = new Color(r, g, b);
 	}
 
 	public void keyTyped(KeyEvent e) {
