@@ -29,6 +29,7 @@ final public class GunGame {
 	int bulletCount = 0;
 	int clickCount = 0;
 	int totalBullets = 0;
+	int score = 0;
 
 	boolean mutex_acquired = false;
 
@@ -48,7 +49,7 @@ final public class GunGame {
 	private void go() {
 		Color backgroundColor = new Color(135, 206, 235);
 
-		frame = new JFrame("Test");
+		frame = new JFrame("Gun Game");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.add(new DrawPanel());
 		frame.setVisible(true);
@@ -99,6 +100,7 @@ final public class GunGame {
 				g.drawString("Y: " + bulletArray.get(bulletCount).getYValue(), 10, 65);
 				g.drawString("X v: " + bulletArray.get(bulletCount).getXChanger(), 10, 80);
 				g.drawString("Y v: " + bulletArray.get(bulletCount).getYChanger(), 10, 95);
+				g.drawString("Score: " + score, 10, 110);
 			}
 			
 			releaseMutex();
@@ -268,19 +270,15 @@ final public class GunGame {
 			
 			mutex();
 			
-			checkCollision();
-			
-			releaseMutex();
-			
-			mutex();
-			
 			for (Bullet thisBullet : bulletArray) {
 				thisBullet.moveX();
 				thisBullet.moveY();
 				
-				if((thisBullet.getXValue() > theTarget.getTargetX() && thisBullet.getXValue() < theTarget.getTargetX() + 100)
-						&& (thisBullet.getYValue() > theTarget.getTargetY() && thisBullet.getXValue() < theTarget.getTargetY() + 100) )
+				if((thisBullet.getXValue() > theTarget.getTargetX() && thisBullet.getXValue() < theTarget.getTargetX() + theTarget.getWidth())
+						&& (thisBullet.getYValue() > theTarget.getTargetY() && thisBullet.getYValue() < theTarget.getTargetY() + theTarget.getHeight()) )
 				{
+					System.out.println("In collision loop");
+					score++;
 					thisBullet.changeXDirection();
 					thisBullet.changeYDirection();
 				}

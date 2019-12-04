@@ -14,7 +14,7 @@ public class Target extends JPanel
 	
 	public Target()
 	{
-		x = 1050;
+		x = 900;
 		y = 360;
 		width = 100;
 		height = 100;
@@ -33,6 +33,16 @@ public class Target extends JPanel
 	
 	
 	
+	public int getWidth() {
+		return width;
+	}
+
+	public int getHeight() {
+		return height;
+	}
+
+
+
 	public void paintTarget(Graphics g)
 	{
 		g.setColor(Color.darkGray);
