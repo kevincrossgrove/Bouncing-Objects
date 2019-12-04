@@ -139,8 +139,6 @@ public class Bullet extends JPanel {
 		}
 
 		g.fillOval(x, y, bulletWidth, bulletHeight);
-
-		repaint();
 	}
 
 	public int getDistance() {

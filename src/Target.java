@@ -10,7 +10,6 @@ public class Target extends JPanel
 	private int width;
 	private int height;
 	private int velocity;
-	private boolean move;
 	
 	public Target()
 	{

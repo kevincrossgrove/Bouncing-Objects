@@ -36,6 +36,7 @@ final public class GunGame {
 
 	ArrayList<Bullet> bulletArray = new ArrayList<Bullet>();
 	Target theTarget = new Target();
+	Cannon cannon = new Cannon();
 
 	private JButton fire;
 	private JButton changePicture;
@@ -111,20 +112,21 @@ final public class GunGame {
 			g.setColor(grassColor);
 			g.fillRect(0, d.height - d.height / 4, d.width, d.height / 4);
 			theTarget.paintTarget(g);
+			cannon.paintCannon(g);
 
-			int x1 = 50;
-			int y1 = d.height - d.height / 4;
-			g.setColor(Color.black);
-			// Create gun
-			Polygon myPolygon;
-			myPolygon = new Polygon();
-			myPolygon.addPoint(x1, y1);
-			myPolygon.addPoint(x1 + 20, y1 - 100);
-			myPolygon.addPoint(x1 + 100, y1 - 100);
-			myPolygon.addPoint(x1 + 100, y1 - 80);
-			myPolygon.addPoint(x1 + 40, y1 - 80);
-			myPolygon.addPoint(x1 + 20, y1);
-			g.fillPolygon(myPolygon);
+//			int x1 = 50;
+//			int y1 = d.height - d.height / 4;
+//			g.setColor(Color.black);
+//			// Create gun
+////			Polygon myPolygon;
+////			myPolygon = new Polygon();
+////			myPolygon.addPoint(x1, y1);
+////			myPolygon.addPoint(x1 + 20, y1 - 100);
+////			myPolygon.addPoint(x1 + 100, y1 - 100);
+////			myPolygon.addPoint(x1 + 100, y1 - 80);
+////			myPolygon.addPoint(x1 + 40, y1 - 80);
+////			myPolygon.addPoint(x1 + 20, y1);
+////			g.fillPolygon(myPolygon);
 
 			if (totalBullets == 0)
 				changePicture.setVisible(false);
@@ -139,6 +141,8 @@ final public class GunGame {
 				}
 			}
 			releaseMutex();
+			
+			
 		}
 
 //constructor to add buttons
@@ -149,12 +153,18 @@ final public class GunGame {
 			scramble = new JButton("Scramble");
 			randomize = new JButton("Randomize");
 			clear = new JButton("Clear Screen");
+			
 
 			fire.addActionListener(this);
 			changePicture.addActionListener(this);
 			scramble.addActionListener(this);
 			randomize.addActionListener(this);
 			clear.addActionListener(this);
+			
+			KeyListener keyListener = null;
+			addKeyListener(keyListener);
+			setFocusable(true);
+			setFocusTraversalKeysEnabled(false);
 
 			fire.setBackground(Color.blue);
 			changePicture.setBackground(Color.blue);
@@ -183,16 +193,8 @@ final public class GunGame {
 
 				mutex();
 				
-				// If else statement for adding bullets. Doesn't run until mutex is completed.
-				if (bulletArray.isEmpty()) {
-					bulletArray.add(new Bullet());
-					bulletArray.get(bulletCount).startX();
-				} else {
-					bulletArray.get(bulletCount).makeBlack();
-					bulletArray.add(new Bullet());
-					bulletArray.get(bulletCount + 1).startX();
-					bulletCount++;
-				}
+				addNewBullet();
+
 				releaseMutex();
 				random = false;
 			}
@@ -230,6 +232,7 @@ final public class GunGame {
 					else {
 						everyBullet.changeXDirection();
 						everyBullet.changeYDirection();
+						cannon.down();
 					}
 
 					everyBullet.updateCount();
@@ -255,26 +258,34 @@ final public class GunGame {
 				clearScreen = true;
 
 			}
+			
 			repaint();
 		}
 
-		@Override
-		public void keyTyped(KeyEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
 		public void keyPressed(KeyEvent e) {
-			// TODO Auto-generated method stub
+			int code = e.getKeyCode();
+			if (code == KeyEvent.VK_W)
+			{
+				System.out.println("Up");
+				cannon.up();
+			}
+			else if (code == KeyEvent.VK_S)
+			{
+				System.out.println("Down");
+				cannon.down();
+			}
+			else if (code == KeyEvent.VK_F)
+			{
+				System.out.println("Fire");
+				addNewBullet();
+			}
 			
+		}
+		public void keyTyped(KeyEvent e) {
+		}
+		public void keyReleased(KeyEvent e) {	
 		}
 
-		@Override
-		public void keyReleased(KeyEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
 	}
 
 //end of class DrawPanel
@@ -296,7 +307,6 @@ final public class GunGame {
 				if((thisBullet.getXValue() > theTarget.getTargetX() && thisBullet.getXValue() < theTarget.getTargetX() + theTarget.getWidth())
 						&& (thisBullet.getYValue() > theTarget.getTargetY() && thisBullet.getYValue() < theTarget.getTargetY() + theTarget.getHeight()) )
 				{
-					System.out.println("In collision loop");
 					score++;
 					thisBullet.setCollided();
 					thisBullet.changeXDirection();
@@ -359,19 +369,17 @@ final public class GunGame {
 	{
 		while (!acquireMutex()) { }
 	}
-
-	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void keyPressed(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
+	
+	public void addNewBullet()
+	{
+		if (bulletArray.isEmpty()) {
+			bulletArray.add(new Bullet());
+			bulletArray.get(bulletCount).startX();
+		} else {
+			bulletArray.get(bulletCount).makeBlack();
+			bulletArray.add(new Bullet());
+			bulletArray.get(bulletCount + 1).startX();
+			bulletCount++;
+		}
 	}
 }
