@@ -79,6 +79,16 @@ public class Bullet extends JPanel
 		return y;
 	}
 	
+	public int width()
+	{
+		return bulletWidth;
+	}
+	
+	public int height()
+	{
+		return bulletHeight;
+	}
+	
 	public int getXChanger()
 	{
 		return xchanger;

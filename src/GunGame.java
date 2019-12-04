@@ -265,15 +265,28 @@ final public class GunGame {
 			if (theTarget.getTargetY() > frame.getSize().height - 100 || theTarget.getTargetY() < 0) {
 				theTarget.changeDirection();
 			}
-
+			
+			mutex();
+			
+			checkCollision();
+			
+			releaseMutex();
+			
 			mutex();
 			
 			for (Bullet thisBullet : bulletArray) {
 				thisBullet.moveX();
 				thisBullet.moveY();
+				
+				if((thisBullet.getXValue() > theTarget.getTargetX() && thisBullet.getXValue() < theTarget.getTargetX() + 100)
+						&& (thisBullet.getYValue() > theTarget.getTargetY() && thisBullet.getXValue() < theTarget.getTargetY() + 100) )
+				{
+					thisBullet.changeXDirection();
+					thisBullet.changeYDirection();
+				}
 
 				if (thisBullet.isRandom() && !clearScreen) {
-					if (thisBullet.getXValue() > frame.getSize().width - 30 || thisBullet.getXValue() < 10) {
+					if (thisBullet.getXValue() > frame.getSize().width - thisBullet.width() || thisBullet.getXValue() < 10) {
 						thisBullet.changeXDirection();
 					}
 					if (thisBullet.getYValue() > frame.getSize().height - 35 || thisBullet.getYValue() < 10) {
@@ -282,7 +295,7 @@ final public class GunGame {
 				} else if (!clearScreen) {
 					if (!bulletArray.isEmpty()) {
 
-						if (thisBullet.getXValue() > frame.getSize().width - ((frame.getSize().width) / 10)) {
+						if (thisBullet.getXValue() > frame.getSize().width - thisBullet.width()) {
 							thisBullet.changeXDirection();
 						}
 
@@ -315,6 +328,7 @@ final public class GunGame {
 			releaseMutex();
 
 			try {
+				//Changes the speed of moving objects
 				Thread.sleep(2);
 			} catch (Exception e) {
 			}
@@ -330,12 +344,12 @@ final public class GunGame {
 	
 	public void checkCollision()
 	{
-		for (Bullet everyBullet : bulletArray) {
-			if((everyBullet.getXValue() > theTarget.getTargetX() && everyBullet.getXValue() < theTarget.getTargetX() + 100)
-					|| everyBullet.getYValue() > theTarget.getTargetY() && everyBullet.getXValue() < theTarget.getTargetY() + 100 )
+		for (Bullet thisBullet : bulletArray) {
+			if((thisBullet.getXValue() > theTarget.getTargetX() && thisBullet.getXValue() < theTarget.getTargetX() + 100)
+					&& (thisBullet.getYValue() > theTarget.getTargetY() && thisBullet.getXValue() < theTarget.getTargetY() + 100) )
 			{
-				everyBullet.changeXDirection();
-				everyBullet.changeYDirection();
+				thisBullet.changeXDirection();
+				thisBullet.changeYDirection();
 			}
 		}
 	}
