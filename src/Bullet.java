@@ -15,6 +15,8 @@ public class Bullet extends JPanel {
 	private boolean random;
 	private boolean collided;
 	private boolean isRed;
+	private boolean changed;
+	Color currentColor;
 	Random rand = new Random();
 
 	public Bullet() {
@@ -25,6 +27,7 @@ public class Bullet extends JPanel {
 		bulletHeight = 10;
 		random = false;
 		collided = false;
+		changed = false;
 		isRed = true;
 		x = 145;
 		y = 410;
@@ -119,12 +122,18 @@ public class Bullet extends JPanel {
 		if (isRed) {
 			g.setColor(Color.red);
 		} else if (collided) {
+			changed = false;
 			Random rand = new Random();
 			float r = rand.nextFloat();
 			float gg = rand.nextFloat();
 			float b = rand.nextFloat();
 			Color randomColor = new Color(r, gg, b);
 			g.setColor(randomColor);
+			collided = false;
+			changed = true;
+			currentColor = randomColor;
+		} else if (changed) {
+			g.setColor(currentColor);
 		} else {
 			g.setColor(Color.black);
 		}

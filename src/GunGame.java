@@ -359,15 +359,6 @@ final public class GunGame {
 	{
 		while (!acquireMutex()) { }
 	}
-	
-	public void changeColor()
-	{
-		Random rand = new Random();
-	    float r = rand.nextFloat();
-	    float g = rand.nextFloat();
-	    float b = rand.nextFloat();
-	    Color randomColor = new Color(r, g, b);
-	}
 
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
