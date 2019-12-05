@@ -68,6 +68,10 @@ public class Bullet extends JPanel {
 	public int getXValue() {
 		return x;
 	}
+	
+	public void setY(int newY) {
+		y = newY;
+	}
 
 	public int getYValue() {
 		return y;

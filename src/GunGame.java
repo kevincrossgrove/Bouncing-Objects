@@ -114,20 +114,6 @@ final public class GunGame {
 			theTarget.paintTarget(g);
 			cannon.paintCannon(g);
 
-//			int x1 = 50;
-//			int y1 = d.height - d.height / 4;
-//			g.setColor(Color.black);
-//			// Create gun
-////			Polygon myPolygon;
-////			myPolygon = new Polygon();
-////			myPolygon.addPoint(x1, y1);
-////			myPolygon.addPoint(x1 + 20, y1 - 100);
-////			myPolygon.addPoint(x1 + 100, y1 - 100);
-////			myPolygon.addPoint(x1 + 100, y1 - 80);
-////			myPolygon.addPoint(x1 + 40, y1 - 80);
-////			myPolygon.addPoint(x1 + 20, y1);
-////			g.fillPolygon(myPolygon);
-
 			if (totalBullets == 0)
 				changePicture.setVisible(false);
 			else
@@ -194,7 +180,6 @@ final public class GunGame {
 		public void actionPerformed(ActionEvent ae) {
 			if (ae.getSource() == fire) {
 				clickCount++;
-				totalBullets++;
 
 				mutex();
 				
@@ -237,7 +222,6 @@ final public class GunGame {
 					else {
 						everyBullet.changeXDirection();
 						everyBullet.changeYDirection();
-						cannon.down();
 					}
 
 					everyBullet.updateCount();
@@ -269,21 +253,23 @@ final public class GunGame {
 
 		public void keyPressed(KeyEvent e) {
 			int code = e.getKeyCode();
+			
+			mutex();
+			
 			if (code == KeyEvent.VK_W)
 			{
-				System.out.println("Up");
 				cannon.up();
 			}
 			else if (code == KeyEvent.VK_S)
 			{
-				System.out.println("Down");
 				cannon.down();
 			}
 			else if (code == KeyEvent.VK_F)
 			{
-				System.out.println("Fire");
 				addNewBullet();
 			}
+			
+			releaseMutex();
 			
 		}
 		public void keyTyped(KeyEvent e) {
@@ -318,24 +304,12 @@ final public class GunGame {
 					thisBullet.changeYDirection();
 				}
 
-				if (thisBullet.isRandom() && !clearScreen) {
+				if (!clearScreen) {
 					if (thisBullet.getXValue() > frame.getSize().width - thisBullet.width() || thisBullet.getXValue() < 10) {
 						thisBullet.changeXDirection();
 					}
 					if (thisBullet.getYValue() > frame.getSize().height - 35 || thisBullet.getYValue() < 10) {
 						thisBullet.changeYDirection();
-					}
-				} else if (!clearScreen) {
-					if (!bulletArray.isEmpty()) {
-
-						if (thisBullet.getXValue() > frame.getSize().width - thisBullet.width()) {
-							thisBullet.changeXDirection();
-						}
-
-						if (thisBullet.getXValue() < 130) {
-							thisBullet.changeXDirection();
-						}
-						
 					}
 				}
 			}
@@ -379,12 +353,15 @@ final public class GunGame {
 	{
 		if (bulletArray.isEmpty()) {
 			bulletArray.add(new Bullet());
+			bulletArray.get(bulletCount).setY(cannon.getY() + 7);
 			bulletArray.get(bulletCount).startX();
 		} else {
 			bulletArray.get(bulletCount).makeBlack();
 			bulletArray.add(new Bullet());
+			bulletArray.get(bulletCount + 1).setY(cannon.getY() + 7);
 			bulletArray.get(bulletCount + 1).startX();
 			bulletCount++;
 		}
+		totalBullets++;
 	}
 }
