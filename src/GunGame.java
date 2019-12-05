@@ -336,13 +336,14 @@ final public class GunGame {
 
 			try {
 				//Changes the speed of moving objects
-				Thread.sleep(1);
+				Thread.sleep(3);
 			} catch (Exception e) {
 			}
 			frame.repaint();
 		}
 	}
 	
+	//Testing git
 	//Mutual exclusion function - runs while mutex has not been acquired
 	public void mutex()
 	{
