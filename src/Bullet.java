@@ -4,6 +4,10 @@ import java.util.Random;
 import java.awt.*;
 
 public class Bullet extends JPanel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int x;
 	private int y;
 	private int xchanger;
@@ -29,7 +33,7 @@ public class Bullet extends JPanel {
 		collided = false;
 		changed = false;
 		isRed = true;
-		x = 145;
+		x = 165;
 		y = 410;
 		distanceToGround = (y - 700) * -1;
 	}
@@ -67,6 +71,10 @@ public class Bullet extends JPanel {
 
 	public int getXValue() {
 		return x;
+	}
+	
+	public void setX(int newX) {
+		x = newX;
 	}
 	
 	public void setY(int newY) {

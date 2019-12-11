@@ -1,22 +1,31 @@
-import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
 
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 public class Cannon extends JPanel {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int x;
 	private int y;
 	private int height;
 	private int width;
 	private int velocity;
+	private Image image;
 	
 	
 	public Cannon() {
 		x = 100;
 		y = 400;
-		height = 25;
-		width = 100;
+		ImageIcon ii = new ImageIcon("C:\\Users\\Kevin Crossgrove\\Documents\\GitHub\\GunGame\\GunGame\\Cannon.png");
+		image = ii.getImage();
+		height = image.getHeight(null)/2;
+		width = image.getWidth(null)/2;
 		velocity = 4;
 	}
 
@@ -49,8 +58,8 @@ public class Cannon extends JPanel {
 	
 	public void paintCannon(Graphics g)
 	{
-		g.setColor(Color.black);
-		g.fillRect(x, y, width, height);
+		Graphics2D g2d = (Graphics2D) g;
+		g2d.drawImage(image, x, y, width, height, this);
 		repaint();
 	}
 

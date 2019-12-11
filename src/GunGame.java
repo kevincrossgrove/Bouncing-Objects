@@ -1,7 +1,7 @@
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Polygon;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -9,9 +9,9 @@ import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Random;
 import java.util.Set;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -110,8 +110,15 @@ final public class GunGame {
 			
 			releaseMutex();
 
-			g.setColor(Color.yellow);
-			g.fillOval(d.width / 16, d.height / 16, 100, 100);
+			//Import sun photo
+			Image sun;
+			ImageIcon ii = new ImageIcon("C:\\Users\\Kevin Crossgrove\\Documents\\GitHub\\GunGame\\GunGame\\sun.png");
+			sun = ii.getImage();
+			int imageWidth = sun.getHeight(null)/2;
+			int imageHeight = sun.getHeight(null)/2;
+			g.drawImage(sun, 80, 10, imageWidth/3, imageHeight/3, this);
+
+			//Set up grass
 			g.setColor(grassColor);
 			g.fillRect(0, d.height - d.height / 4, d.width, d.height / 4);
 			theTarget.paintTarget(g);
@@ -177,7 +184,6 @@ final public class GunGame {
 			add(scramble);
 			add(randomize);
 			add(clear);
-
 		}
 
 		public void actionPerformed(ActionEvent ae) {
@@ -355,12 +361,14 @@ final public class GunGame {
 	{
 		if (bulletArray.isEmpty()) {
 			bulletArray.add(new Bullet());
-			bulletArray.get(bulletCount).setY(cannon.getY() + 7);
+			bulletArray.get(bulletCount).setY(cannon.getY() + cannon.getHeight()/2 - 5);
+			bulletArray.get(bulletCount).setX(cannon.getX() + cannon.getWidth() - 10);
 			bulletArray.get(bulletCount).startX();
 		} else {
 			bulletArray.get(bulletCount).makeBlack();
 			bulletArray.add(new Bullet());
-			bulletArray.get(bulletCount + 1).setY(cannon.getY() + 7);
+			bulletArray.get(bulletCount + 1).setY(cannon.getY() + cannon.getHeight()/2 - 5);
+			bulletArray.get(bulletCount + 1).setX(cannon.getX() + cannon.getWidth() - 10);
 			bulletArray.get(bulletCount + 1).startX();
 			bulletCount++;
 		}
