@@ -7,8 +7,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Random;
+import java.util.Set;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -37,6 +39,7 @@ final public class GunGame {
 	ArrayList<Bullet> bulletArray = new ArrayList<Bullet>();
 	Target theTarget = new Target();
 	Cannon cannon = new Cannon();
+	Set<Integer> keyPresses = new HashSet<>();
 
 	private JButton fire;
 	private JButton changePicture;
@@ -253,28 +256,26 @@ final public class GunGame {
 
 		public void keyPressed(KeyEvent e) {
 			int code = e.getKeyCode();
+			keyPresses.add(code);
 			
 			mutex();
-			
-			if (code == KeyEvent.VK_W)
-			{
+
+			if (keyPresses.contains(KeyEvent.VK_W))
 				cannon.up();
-			}
-			else if (code == KeyEvent.VK_S)
-			{
+			if (keyPresses.contains(KeyEvent.VK_S))
 				cannon.down();
-			}
-			else if (code == KeyEvent.VK_F)
-			{
+			if (keyPresses.contains(KeyEvent.VK_F))
 				addNewBullet();
-			}
 			
 			releaseMutex();
 			
 		}
 		public void keyTyped(KeyEvent e) {
 		}
-		public void keyReleased(KeyEvent e) {	
+		public void keyReleased(KeyEvent e) {
+			int code = e.getKeyCode();
+			if (keyPresses.contains(code))
+				keyPresses.remove(code);
 		}
 
 	}
@@ -336,7 +337,7 @@ final public class GunGame {
 
 			try {
 				//Changes the speed of moving objects
-				Thread.sleep(3);
+				Thread.sleep(6);
 			} catch (Exception e) {
 			}
 			frame.repaint();
