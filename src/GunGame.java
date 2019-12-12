@@ -52,7 +52,7 @@ final public class GunGame {
 	}
 
 	private void go() {
-		Color backgroundColor = new Color(135, 206, 235);
+		Color backgroundColor = new Color(100, 206, 255);
 
 		frame = new JFrame("Gun Game");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -112,15 +112,20 @@ final public class GunGame {
 
 			//Import sun photo
 			Image sun;
-			ImageIcon ii = new ImageIcon("C:\\Users\\Kevin Crossgrove\\Documents\\GitHub\\GunGame\\GunGame\\sun.png");
-			sun = ii.getImage();
-			int imageWidth = sun.getHeight(null)/2;
-			int imageHeight = sun.getHeight(null)/2;
-			g.drawImage(sun, 80, 10, imageWidth/3, imageHeight/3, this);
+			ImageIcon s = new ImageIcon("C:\\Users\\Kevin Crossgrove\\Documents\\GitHub\\GunGame\\GunGame\\sun.png");
+			sun = s.getImage();
+			int sunWidth = sun.getWidth(null)/2;
+			int sunHeight = sun.getHeight(null)/2;
+			g.drawImage(sun, 80, 10, sunWidth/3, sunHeight/3, this);
 
-			//Set up grass
-			g.setColor(grassColor);
-			g.fillRect(0, d.height - d.height / 4, d.width, d.height / 4);
+			//Set up grass photo
+			Image grass;
+			ImageIcon gg = new ImageIcon("C:\\Users\\Kevin Crossgrove\\Documents\\GitHub\\GunGame\\GunGame\\Grass.png");
+			grass = gg.getImage();
+			int grassWidth = grass.getWidth(null)/2;
+			int grassHeight = grass.getHeight(null)/2;
+			g.drawImage(grass, 0, frame.getHeight() - grassHeight + 50, grassWidth, grassHeight - 50, this);
+
 			theTarget.paintTarget(g);
 			cannon.paintCannon(g);
 
@@ -312,10 +317,10 @@ final public class GunGame {
 				}
 
 				if (!clearScreen) {
-					if (thisBullet.getXValue() > frame.getSize().width - thisBullet.width() || thisBullet.getXValue() < 10) {
+					if (thisBullet.getXValue() > frame.getSize().width - thisBullet.width() || thisBullet.getXValue() < 0) {
 						thisBullet.changeXDirection();
 					}
-					if (thisBullet.getYValue() > frame.getSize().height - 35 || thisBullet.getYValue() < 10) {
+					if (thisBullet.getYValue() > frame.getSize().height - 35 || thisBullet.getYValue() < 0) {
 						thisBullet.changeYDirection();
 					}
 				}
@@ -343,7 +348,7 @@ final public class GunGame {
 
 			try {
 				//Changes the speed of moving objects
-				Thread.sleep(6);
+				Thread.sleep(4);
 			} catch (Exception e) {
 			}
 			frame.repaint();

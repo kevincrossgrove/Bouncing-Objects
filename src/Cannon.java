@@ -21,7 +21,7 @@ public class Cannon extends JPanel {
 	
 	public Cannon() {
 		x = 100;
-		y = 400;
+		y = 325;
 		ImageIcon ii = new ImageIcon("C:\\Users\\Kevin Crossgrove\\Documents\\GitHub\\GunGame\\GunGame\\Cannon.png");
 		image = ii.getImage();
 		height = image.getHeight(null)/2;
@@ -45,7 +45,7 @@ public class Cannon extends JPanel {
 	}
 	
 	public void down() {
-		y+= velocity;
+		y+= velocity;	
 	}
 	
 	public int getHeight() {
