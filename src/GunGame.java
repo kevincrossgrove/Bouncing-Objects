@@ -112,7 +112,7 @@ final public class GunGame {
 
 			//Import sun photo
 			Image sun;
-			ImageIcon s = new ImageIcon("C:\\Users\\Kevin Crossgrove\\Documents\\GitHub\\GunGame\\GunGame\\sun.png");
+			ImageIcon s = new ImageIcon("C:\\Users\\Kevin Crossgrove\\Documents\\GitHub\\GunGame\\GunGame\\src\\sun.png");
 			sun = s.getImage();
 			int sunWidth = sun.getWidth(null)/2;
 			int sunHeight = sun.getHeight(null)/2;
@@ -120,7 +120,7 @@ final public class GunGame {
 
 			//Set up grass photo
 			Image grass;
-			ImageIcon gg = new ImageIcon("C:\\Users\\Kevin Crossgrove\\Documents\\GitHub\\GunGame\\GunGame\\Grass.png");
+			ImageIcon gg = new ImageIcon("C:\\Users\\Kevin Crossgrove\\Documents\\GitHub\\GunGame\\GunGame\\src\\Grass.png");
 			grass = gg.getImage();
 			int grassWidth = grass.getWidth(null)/2;
 			int grassHeight = grass.getHeight(null)/2;

@@ -22,14 +22,13 @@ public class Cannon extends JPanel {
 	public Cannon() {
 		x = 100;
 		y = 325;
-		ImageIcon ii = new ImageIcon("C:\\Users\\Kevin Crossgrove\\Documents\\GitHub\\GunGame\\GunGame\\Cannon.png");
+		ImageIcon ii = new ImageIcon("C:\\Users\\Kevin Crossgrove\\Documents\\GitHub\\GunGame\\GunGame\\src\\Cannon.png");
 		image = ii.getImage();
 		height = image.getHeight(null)/2;
 		width = image.getWidth(null)/2;
 		velocity = 4;
 	}
-
-
+	
 	public int getX() {
 		return x;
 	}
