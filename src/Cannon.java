@@ -7,15 +7,7 @@ import javax.swing.JPanel;
 
 public class Cannon extends JPanel {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	private int x;
-	private int y;
-	private int height;
-	private int width;
-	private int velocity;
+	private int x, y, height, width, velocity;
 	private Image image;
 	
 	
@@ -38,13 +30,20 @@ public class Cannon extends JPanel {
 		return y;
 	}
 
-
 	public void up() {
-		y-= velocity;;
+		y-= velocity;
 	}
 	
 	public void down() {
 		y+= velocity;	
+	}
+
+	public void right() {
+		x += velocity;
+	}
+
+	public void left() {
+		x -= velocity;
 	}
 	
 	public int getHeight() {

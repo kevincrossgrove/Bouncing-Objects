@@ -4,18 +4,8 @@ import java.util.Random;
 import java.awt.*;
 
 public class Bullet extends JPanel {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	private int x;
-	private int y;
-	private int xchanger;
-	private int ychanger;
-	private int bulletWidth;
-	private int bulletHeight;
-	private int count;
-	private int distanceToGround;
+
+	private int x, y, xchanger, ychanger, bulletWidth, bulletHeight, count, distanceToGround;
 	private boolean random;
 	private boolean collided;
 	private boolean isRed;
@@ -39,25 +29,24 @@ public class Bullet extends JPanel {
 	}
 
 	public void changeXDirection() {
-		xchanger = -xchanger;
-	}
+		xchanger = -xchanger;	
+	} 
 
-	public void changeYDirection() {
+	public void changeYDirection(){
 		ychanger = -ychanger;
-	}
+	} 
 
 	public void moveX() {
 		x += xchanger;
-
-	}
+	} 
 
 	public void moveY() {
 		y += ychanger;
-	}
+	} 
 
 	public void startX() {
 		xchanger = 1;
-	}
+	} 
 
 	public void startY() {
 		ychanger = 1;

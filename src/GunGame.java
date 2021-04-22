@@ -17,12 +17,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 //Notice that we are not extending the panel here
-//Replace array list with a set
-//Replace bullet count with current bullet
-//Research mutex's in java
-//Notice that we are not extending the panel here
 final public class GunGame {
-// We define the frame and panel as class level
+	// We define the frame and panel as class level
 	JFrame frame;
 	DrawPanel drawPanel;
 
@@ -80,12 +76,9 @@ final public class GunGame {
 	}
 
 //We now create a class that is the panel and has the buttons...for our
-
 	class DrawPanel extends JPanel implements ActionListener, KeyListener {
 
-		private static final long serialVersionUID = 1L;
-
-//paintComponent rather than paint...for the redraw
+		//paintComponent rather than paint...for the redraw
 		public void paintComponent(Graphics g) {
 			drawPicture(g);
 		}
@@ -141,98 +134,64 @@ final public class GunGame {
 					newBullet.paint(g);
 				}
 			}
+
 			releaseMutex();
-			
-			
 		}
 
-//constructor to add buttons
-		public DrawPanel() {
+		// Function that setups buttons
+		public void setupButton(JButton button) {
+			button.addActionListener(this);
+			button.setBackground(Color.blue);
+			button.setForeground(Color.white);
+			button.setFocusable(false);
+			add(button);
+		}
 
+		//Constructor for creating Buttons
+		public DrawPanel() {
 			fire = new JButton("Fire Gun");
 			changePicture = new JButton("Change Red Bullet");
 			scramble = new JButton("Scramble");
 			randomize = new JButton("Randomize");
 			clear = new JButton("Clear Screen");
-			
 
-			fire.addActionListener(this);
-			changePicture.addActionListener(this);
-			scramble.addActionListener(this);
-			randomize.addActionListener(this);
-			clear.addActionListener(this);
+			setupButton(fire);
+			setupButton(changePicture);
+			setupButton(scramble);
+			setupButton(randomize);
+			setupButton(clear);
 			
 			addKeyListener(this);
 			setFocusable(true);
 			setFocusTraversalKeysEnabled(false);
-
-			fire.setBackground(Color.blue);
-			changePicture.setBackground(Color.blue);
-			scramble.setBackground(Color.blue);
-			randomize.setBackground(Color.blue);
-			clear.setBackground(Color.blue);
-
-			fire.setForeground(Color.white);
-			changePicture.setForeground(Color.white);
-			scramble.setForeground(Color.white);
-			randomize.setForeground(Color.white);
-			clear.setForeground(Color.white);
-			
-			fire.setFocusable(false);
-			changePicture.setFocusable(false);
-			scramble.setFocusable(false);
-			randomize.setFocusable(false);
-			clear.setFocusable(false);
-
-			add(fire);
-			add(changePicture);
-			add(scramble);
-			add(randomize);
-			add(clear);
 		}
 
+		// Responds to button clicks the user makes
 		public void actionPerformed(ActionEvent ae) {
+			mutex();
+
 			if (ae.getSource() == fire) {
-				clickCount++;
-
-				mutex();
-				
 				addNewBullet();
-
-				releaseMutex();
 				random = false;
 			}
-
 			else if (ae.getSource() == changePicture) {
-				clickCount++;
-
-				mutex();
-				
 				bulletArray.get(bulletCount).setRandom();
 				if (bulletArray.get(bulletCount).getCount() == 0) {
 					bulletArray.get(bulletCount).startY();
 				}
-
 				else {
 					bulletArray.get(bulletCount).changeXDirection();
 					bulletArray.get(bulletCount).changeYDirection();
 				}
 
 				bulletArray.get(bulletCount).updateCount();
-				releaseMutex();
-			}
-
+			} 
 			else if (ae.getSource() == scramble) {
-				clickCount++;
-
-				mutex();
-				
 				for (Bullet everyBullet : bulletArray) {
 					everyBullet.setRandom();
 					if (everyBullet.getCount() == 0) {
 						everyBullet.startY();
 					}
-
 					else {
 						everyBullet.changeXDirection();
 						everyBullet.changeYDirection();
@@ -240,31 +199,27 @@ final public class GunGame {
 
 					everyBullet.updateCount();
 				}
-				releaseMutex();
-			} else if (ae.getSource() == randomize) {
-				clickCount++;
-
-				mutex();
-
+			} 
+			else if (ae.getSource() == randomize) {
 				for (Bullet everyBullet : bulletArray) {
 					everyBullet.setRandom();
+
 					if (bulletArray.get(bulletCount).getCount() == 0) {
 						bulletArray.get(bulletCount).startY();
 					}
 
 					everyBullet.generateRandomPath();
 				}
-				releaseMutex();
 			} else if (ae.getSource() == clear) {
-				clickCount++;
-
 				clearScreen = true;
-
 			}
-			
+
+			clickCount++;
+			releaseMutex();
 			repaint();
 		}
 
+		// Respond to Keyboard events
 		public void keyPressed(KeyEvent e) {
 			int code = e.getKeyCode();
 			keyPresses.add(code);
@@ -275,24 +230,27 @@ final public class GunGame {
 				cannon.up();
 			if (keyPresses.contains(KeyEvent.VK_S))
 				cannon.down();
+			if (keyPresses.contains(KeyEvent.VK_D))
+				cannon.right();
+			if (keyPresses.contains(KeyEvent.VK_A))
+				cannon.left();
 			if (keyPresses.contains(KeyEvent.VK_F))
 				addNewBullet();
 			
 			releaseMutex();
 			
 		}
-		public void keyTyped(KeyEvent e) {
-		}
+
+		public void keyTyped(KeyEvent e) { }
+
 		public void keyReleased(KeyEvent e) {
 			int code = e.getKeyCode();
 			if (keyPresses.contains(code))
 				keyPresses.remove(code);
 		}
-
 	}
 
-//end of class DrawPanel
-//my function to control the animation
+	//my function to control the animation
 	private void moveIt() {
 		while (true) {
 			theTarget.moveTarget();
@@ -326,7 +284,6 @@ final public class GunGame {
 				}
 			}
 		
-
 			//Iterator used for deleting items out of the list
 			Iterator<Bullet> iter = bulletArray.iterator();
 			while (iter.hasNext() && clearScreen) {
@@ -341,29 +298,26 @@ final public class GunGame {
 				}
 			}
 
-			if (bulletArray.isEmpty()) {
-				clearScreen = false;
-			}
-			releaseMutex();
+			// Reset clear screen flag when all bullets are gone.
+			if (bulletArray.isEmpty()) clearScreen = false;
 
 			try {
 				//Changes the speed of moving objects
 				Thread.sleep(4);
-			} catch (Exception e) {
-			}
+			} catch (Exception e) {}
+
+			releaseMutex();
 			frame.repaint();
 		}
 	}
 	
-	//Testing git
-	//Mutual exclusion function - runs while mutex has not been acquired
-	public void mutex()
-	{
+	// Mutual exclusion function - Runs while mutex has not been acquired
+	public void mutex() {
 		while (!acquireMutex()) { }
 	}
 	
-	public void addNewBullet()
-	{
+	public void addNewBullet(){
+
 		if (bulletArray.isEmpty()) {
 			bulletArray.add(new Bullet());
 			bulletArray.get(bulletCount).setY(cannon.getY() + cannon.getHeight()/2 - 5);
